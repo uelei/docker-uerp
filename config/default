@@ -1,0 +1,27 @@
+<VirtualHost *:80>
+    ServerName domain.tld
+    ServerAlias www.domain.tld
+
+    DocumentRoot /var/www/uerp/web
+    <Directory /var/www/uerp/web>
+        AllowOverride None
+        Order allow,deny
+        Allow from All
+
+        <IfModule mod_rewrite.c>
+            Options -MultiViews
+            RewriteEngine On
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteRule ^(.*)$ app.php [QSA,L]
+        </IfModule>
+    </Directory>
+
+    # uncomment the following lines if you install assets as symlinks
+    # or run into problems when compiling LESS/Sass/CoffeScript assets
+    # <Directory /var/www/uerp>
+    #     Option FollowSymlinks
+    # </Directory>
+
+    ErrorLog /var/log/apache2/uerp_error.log
+    CustomLog /var/log/apache2/uerp_access.log combined
+</VirtualHost>
