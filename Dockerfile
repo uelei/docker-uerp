@@ -11,5 +11,6 @@ RUN cd /var/www/uerp/ && service apache2 start && service mysql start &&php comp
 RUN cd /var/www/uerp/ && chown -R root:www-data app/cache && chown -R root:www-data app/logs && chown -R root:www-data app/config/parameters.yml
 RUN cd /var/www/uerp/ && chmod -R 775 app/cache && chmod -R 775 app/logs && chmod -R 775 app/config/parameters.yml
 RUN a2enmod rewrite && service apache2 start && service mysql start && cd /var/www/uerp/ && php app/console fos:user:create admin admin@example.com admin &&  php app/console assetic:dump
+RUN cd /var/www/uerp/web/ && sed -i'' '7,13 s/^/#/' config.php
 EXPOSE 80 22
 CMD ["/usr/bin/supervisord"]
