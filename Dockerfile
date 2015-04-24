@@ -5,7 +5,7 @@ RUN mkdir -p  /var/log/supervisor
 RUN  export DEBIAN_FRONTEND=noninteractive && apt-get -y install mysql-server php5-mysql && service mysql start
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY config/default /etc/apache2/sites-available/default
-RUN git clone https://github.com/uelei/uerp.git /var/www/uerp/
+RUN git clone https://github.com/uelei/uerp.git --branch alpha  /var/www/uerp/
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/var/www/uerp/
 RUN cd /var/www/uerp/ && service apache2 start && service mysql start &&php composer.phar update && app/console doctrine:database:create && app/console doctrine:schema:update --force
 RUN cd /var/www/uerp/ && chown -R root:www-data app/cache && chown -R root:www-data app/logs && chown -R root:www-data app/config/parameters.yml
